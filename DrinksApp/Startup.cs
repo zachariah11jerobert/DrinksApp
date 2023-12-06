@@ -25,13 +25,22 @@ namespace DrinksApp
 
             if (env.IsDevelopment())
             {
+                throw new Exception("This is Test Exception");
                 app.UseDeveloperExceptionPage();
+
+                app.Run(async (context) =>
+                {
+                    await context.Response.WriteAsync("Development Environment");
+                });
             }
 
-            app.Run(async (context) =>
+            if (env.IsProduction())
             {
-                await context.Response.WriteAsync("Hello World!");
-            });
+                app.Run(async (context) =>
+                {
+                    await context.Response.WriteAsync("Production Environment");
+                });
+            }
         }
     }
 }
